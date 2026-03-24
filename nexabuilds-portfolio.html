@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NexaBuilds — Web & AI Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Cabinet+Grotesk:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --lime:#c8f135;
+  --black:#0f0f0f;
+  --white:#fafaf7;
+  --orange:#f4632a;
+  --blue:#1a3cff;
+  --cream:#f0ead8;
+  --mid:#888880;
+}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;cursor:none;}
+#dot{width:8px;height:8px;background:var(--orange);border-radius:50%;position:fixed;z-index:9999;pointer-events:none;top:0;left:0;}
+#ring{width:44px;height:44px;border:2px solid var(--black);border-radius:50%;position:fixed;z-index:9998;pointer-events:none;top:0;left:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;background:var(--black);border-bottom:2px solid var(--lime);}
+.nav-logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--white);letter-spacing:-1px;text-decoration:none;}
+.nav-logo span{color:var(--lime);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(250,250,247,.5);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--lime);}
+.nav-cta{background:var(--lime);color:var(--black) !important;padding:.45rem 1.1rem;font-weight:900 !important;letter-spacing:2px !important;}
+.nav-cta:hover{background:var(--orange);color:var(--white) !important;}
+.hero{padding-top:64px;min-height:100vh;display:grid;grid-template-rows:auto auto;background:var(--black);position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");pointer-events:none;z-index:1;}
+.hero-top{padding:5rem 5% 0;display:flex;align-items:flex-end;justify-content:space-between;position:relative;z-index:2;}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(200,241,53,.35);padding:.4rem 1rem;font-size:.68rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--lime);}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--lime);border-radius:50%;animation:pulse 1.8s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.hero-h1{font-family:'Fraunces',serif;font-size:clamp(5rem,12vw,11rem);font-weight:900;line-height:.88;color:var(--white);letter-spacing:-3px;position:relative;z-index:2;padding:2rem 5%;}
+.hero-h1 .ol{-webkit-text-stroke:2px var(--lime);color:transparent;}
+.hero-h1 .ac{color:var(--lime);}
+.hero-bottom{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid rgba(200,241,53,.2);position:relative;z-index:2;}
+.hero-desc-col{padding:2.5rem 5%;border-right:1.5px solid rgba(200,241,53,.2);}
+.hero-desc-col p{font-size:1.1rem;line-height:1.7;color:rgba(250,250,247,.55);max-width:380px;margin-bottom:2rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-lime{background:var(--lime);color:var(--black);padding:.85rem 2rem;font-size:.78rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:none;border:2px solid var(--lime);transition:all .25s;}
+.btn-lime:hover{background:transparent;color:var(--lime);}
+.btn-wht{background:transparent;color:var(--white);padding:.85rem 2rem;font-size:.78rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:none;border:2px solid rgba(250,250,247,.25);transition:all .25s;}
+.btn-wht:hover{border-color:var(--white);}
+.hstats{display:grid;grid-template-columns:1fr 1fr;}
+.hstat{padding:2rem;border-right:1.5px solid rgba(200,241,53,.2);border-bottom:1.5px solid rgba(200,241,53,.2);}
+.hstat:nth-child(2n){border-right:none;}
+.hstat:nth-child(3),.hstat:nth-child(4){border-bottom:none;}
+.hstat-n{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:var(--lime);line-height:1;margin-bottom:.25rem;}
+.hstat-l{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(250,250,247,.35);}
+.hstat-s{font-size:.85rem;color:rgba(250,250,247,.45);margin-top:.2rem;font-style:italic;}
+.ticker{background:var(--lime);padding:.85rem 0;overflow:hidden;border-top:2px solid var(--black);border-bottom:2px solid var(--black);}
+.ticker-track{display:flex;gap:0;animation:tick 22s linear infinite;white-space:nowrap;}
+.ticker-track span{font-size:.75rem;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--black);padding:0 2rem;}
+.ticker-track .sep{color:var(--orange);padding:0;}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#services{padding:0;border-bottom:2px solid var(--black);}
+.srv-header{display:grid;grid-template-columns:1fr 2fr;border-bottom:2px solid var(--black);}
+.srv-label{padding:3rem 5%;border-right:2px solid var(--black);display:flex;flex-direction:column;justify-content:space-between;}
+.eyebrow{font-size:.65rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.eyebrow::before{content:'';width:24px;height:2px;background:var(--orange);}
+.srv-label h2{font-family:'Fraunces',serif;font-size:clamp(2.5rem,4vw,4.5rem);font-weight:900;line-height:.95;letter-spacing:-2px;}
+.srv-label p{font-size:.9rem;color:var(--mid);line-height:1.6;margin-top:1.5rem;max-width:280px;}
+.srv-list{display:flex;flex-direction:column;}
+.si{display:grid;grid-template-columns:60px 1fr auto;align-items:center;gap:2rem;padding:1.75rem 4rem 1.75rem 3rem;border-bottom:1.5px solid rgba(15,15,15,.1);transition:background .2s;cursor:none;position:relative;overflow:hidden;}
+.si::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--lime);transition:width .3s;z-index:0;}
+.si:hover::before{width:4px;}
+.si:hover{background:rgba(200,241,53,.04);}
+.si:hover .sa{transform:translateX(4px);color:var(--orange);}
+.si>*{position:relative;z-index:1;}
+.si-num{font-family:'Space Mono',monospace;font-size:.8rem;color:var(--mid);}
+.si-name{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;letter-spacing:-.5px;margin-bottom:.3rem;}
+.si-desc{font-size:.82rem;color:var(--mid);line-height:1.6;}
+.si-chips{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap;}
+.chip{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:.18rem .55rem;border:1.5px solid rgba(15,15,15,.15);color:var(--mid);}
+.si-price{text-align:right;}
+.si-price strong{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;letter-spacing:-.5px;}
+.si-price small{display:block;font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);}
+.sa{font-size:1.3rem;margin-left:1rem;color:var(--black);transition:transform .25s,color .25s;}
+#work{background:var(--cream);border-bottom:2px solid var(--black);}
+.work-head{display:flex;align-items:flex-end;justify-content:space-between;padding:4rem 5% 3rem;border-bottom:2px solid var(--black);}
+.work-head h2{font-family:'Fraunces',serif;font-size:clamp(3rem,6vw,6rem);font-weight:900;line-height:.9;letter-spacing:-2px;}
+.work-head h2 em{font-style:italic;color:var(--orange);}
+.work-head p{font-size:.9rem;color:var(--mid);line-height:1.6;max-width:300px;}
+.wc{font-size:.7rem;font-family:'Space Mono',monospace;color:var(--mid);letter-spacing:2px;margin-bottom:.75rem;}
+.work-items{display:flex;flex-direction:column;}
+.wr{display:grid;align-items:stretch;border-bottom:2px solid var(--black);cursor:none;overflow:hidden;}
+.wr.odd{grid-template-columns:55% 45%;}
+.wr.even{grid-template-columns:45% 55%;}
+.wr.even .wvis{order:2;}
+.wr.even .winfo{order:1;border-right:2px solid var(--black);border-left:none;}
+.wvis{min-height:280px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:transform .5s;}
+.wr:hover .wvis{transform:scale(1.02);}
+.winfo{padding:3rem;border-left:2px solid var(--black);display:flex;flex-direction:column;justify-content:center;}
+.wtag{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:.25rem .7rem;display:inline-block;margin-bottom:1.25rem;align-self:flex-start;}
+.wtitle{font-family:'Fraunces',serif;font-size:2rem;font-weight:900;line-height:1;letter-spacing:-.5px;margin-bottom:.75rem;}
+.wdesc{font-size:.85rem;color:var(--mid);line-height:1.65;margin-bottom:1.25rem;}
+.wstack{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem;}
+.wpill{font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:.2rem .55rem;border:1.5px solid rgba(15,15,15,.15);}
+.wcta{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;color:var(--orange);transition:gap .2s;}
+.wr:hover .wcta{gap:.9rem;}
+#pricing{border-bottom:2px solid var(--black);}
+.price-head{padding:4rem 5% 3rem;border-bottom:2px solid var(--black);display:flex;align-items:flex-end;justify-content:space-between;}
+.price-head h2{font-family:'Fraunces',serif;font-size:clamp(3rem,6vw,6rem);font-weight:900;line-height:.9;letter-spacing:-2px;}
+.price-head p{font-size:.9rem;color:var(--mid);max-width:280px;line-height:1.6;}
+.pcols{display:grid;grid-template-columns:repeat(3,1fr);}
+.pc{padding:3rem;border-right:2px solid var(--black);display:flex;flex-direction:column;transition:background .25s;}
+.pc:last-child{border-right:none;}
+.pc.hot{background:var(--black);color:var(--white);}
+.pc:not(.hot):hover{background:var(--cream);}
+.hot-mark{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--lime);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;}
+.hot-mark::before{content:'★';}
+.pc-tier{font-size:.65rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;}
+.pc.hot .pc-tier{color:rgba(250,250,247,.35);}
+.pc-price{font-family:'Fraunces',serif;font-size:3.8rem;font-weight:900;line-height:1;letter-spacing:-2px;margin-bottom:.25rem;}
+.pc-range{font-size:.78rem;color:var(--mid);margin-bottom:.25rem;}
+.pc.hot .pc-range{color:rgba(250,250,247,.35);}
+.pc-days{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:2rem;}
+.pc-line{height:2px;background:rgba(15,15,15,.1);margin-bottom:2rem;}
+.pc.hot .pc-line{background:rgba(250,250,247,.1);}
+.pc-ul{list-style:none;display:flex;flex-direction:column;gap:.7rem;flex:1;margin-bottom:2rem;}
+.pc-ul li{font-size:.85rem;display:flex;gap:.6rem;align-items:flex-start;line-height:1.4;}
+.pc.hot .pc-ul li{color:rgba(250,250,247,.7);}
+.pc-ul li::before{content:'↗';color:var(--orange);font-weight:700;flex-shrink:0;font-size:.8rem;}
+.pc-btn{display:block;text-align:center;padding:.85rem;font-size:.72rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:none;border:2px solid var(--black);color:var(--black);transition:all .25s;}
+.pc-btn:hover{background:var(--black);color:var(--white);}
+.pc.hot .pc-btn{background:var(--lime);border-color:var(--lime);color:var(--black);}
+.pc.hot .pc-btn:hover{background:var(--orange);border-color:var(--orange);color:var(--white);}
+#team{background:var(--black);color:var(--white);border-bottom:2px solid var(--lime);}
+.team-head{padding:4rem 5% 3rem;border-bottom:1.5px solid rgba(200,241,53,.15);display:flex;align-items:flex-end;justify-content:space-between;}
+.team-head h2{font-family:'Fraunces',serif;font-size:clamp(3rem,6vw,6rem);font-weight:900;line-height:.9;letter-spacing:-2px;color:var(--white);}
+.team-head h2 em{font-style:italic;color:var(--lime);}
+.team-head p{font-size:.9rem;color:rgba(250,250,247,.4);max-width:280px;line-height:1.6;}
+.tcols{display:grid;grid-template-columns:repeat(3,1fr);}
+.tc{padding:3rem;border-right:1.5px solid rgba(200,241,53,.12);transition:background .25s;}
+.tc:last-child{border:none;}
+.tc:hover{background:rgba(200,241,53,.03);}
+.tc-letter{font-family:'Fraunces',serif;font-size:6rem;font-weight:900;line-height:1;color:var(--lime);margin-bottom:1rem;display:inline-block;border-bottom:3px solid var(--orange);padding-bottom:.5rem;}
+.tc-badge{font-size:.6rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:.4rem;}
+.tc-name{font-family:'Fraunces',serif;font-style:italic;font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:.25rem;}
+.tc-role{font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(250,250,247,.35);margin-bottom:1.25rem;}
+.tc-skills{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem;}
+.tc-skill{font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:.2rem .55rem;border:1.5px solid rgba(200,241,53,.2);color:rgba(250,250,247,.35);}
+.tc-q{font-family:'DM Serif Display',serif;font-style:italic;font-size:.95rem;color:rgba(250,250,247,.4);line-height:1.6;border-left:2px solid var(--lime);padding-left:.75rem;margin-top:1rem;}
+#why{border-bottom:2px solid var(--black);}
+.why-inner{display:grid;grid-template-columns:1fr 3fr;}
+.why-left{padding:4rem 5%;border-right:2px solid var(--black);display:flex;flex-direction:column;justify-content:space-between;}
+.why-left h2{font-family:'Fraunces',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:900;line-height:.95;letter-spacing:-1.5px;}
+.why-left h2 em{font-style:italic;color:var(--orange);}
+.why-left p{font-size:.85rem;color:var(--mid);line-height:1.65;margin-top:2rem;}
+.why-items{display:grid;grid-template-columns:1fr 1fr;}
+.wi{padding:3rem;border-right:2px solid var(--black);border-bottom:2px solid var(--black);position:relative;overflow:hidden;}
+.wi:nth-child(2n){border-right:none;}
+.wi:nth-child(3),.wi:nth-child(4){border-bottom:none;}
+.wi:hover .wn{color:rgba(244,99,42,.12);}
+.wn{font-family:'Fraunces',serif;font-size:6rem;font-weight:900;color:rgba(15,15,15,.04);line-height:1;margin-bottom:.5rem;transition:color .3s;}
+.wi-title{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;letter-spacing:-.5px;margin-bottom:.6rem;}
+.wi-text{font-size:.83rem;color:var(--mid);line-height:1.65;}
+#contact{background:var(--orange);padding:6rem 5%;position:relative;overflow:hidden;}
+#contact::before{content:'START';font-family:'Fraunces',serif;font-weight:900;font-size:clamp(6rem,20vw,18rem);letter-spacing:-5px;color:rgba(255,255,255,.06);position:absolute;bottom:-2rem;right:3%;line-height:1;pointer-events:none;white-space:nowrap;}
+.cta-ey{font-size:.65rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem;}
+.cta-ey::before{content:'';width:24px;height:2px;background:rgba(255,255,255,.5);}
+#contact h2{font-family:'Fraunces',serif;font-size:clamp(3.5rem,9vw,8rem);font-weight:900;line-height:.9;letter-spacing:-3px;color:var(--white);margin-bottom:1.5rem;}
+#contact h2 em{font-style:italic;}
+#contact p{font-size:1.1rem;color:rgba(255,255,255,.7);max-width:480px;line-height:1.7;margin-bottom:3rem;}
+.cta-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.btn-w{background:var(--white);color:var(--orange);padding:1rem 2.5rem;font-size:.78rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:none;border:2px solid var(--white);transition:all .25s;}
+.btn-w:hover{background:transparent;color:var(--white);}
+.btn-g{background:transparent;color:var(--white);padding:1rem 2.5rem;font-size:.78rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:none;border:2px solid rgba(255,255,255,.4);transition:all .25s;}
+.btn-g:hover{border-color:var(--white);}
+.cta-note{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:2rem;}
+footer{background:var(--black);padding:2rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:2px solid var(--lime);}
+.f-logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;color:var(--white);}
+.f-logo span{color:var(--lime);}
+.f-links{display:flex;gap:2rem;}
+.f-links a{font-size:.65rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(250,250,247,.35);text-decoration:none;transition:color .2s;}
+.f-links a:hover{color:var(--lime);}
+footer p{font-size:.72rem;color:rgba(250,250,247,.2);}
+.rev{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
+.rev.on{opacity:1;transform:none;}
+@media(max-width:768px){
+  .hero-bottom,.srv-header,.hstats,.tcols,.pcols,.why-inner{grid-template-columns:1fr;}
+  .wr.odd,.wr.even{grid-template-columns:1fr;}
+  .wr.even .wvis,.wr.even .winfo{order:unset;}
+  .winfo,.wr.even .winfo{border-left:none;border-right:none;border-top:2px solid var(--black);}
+  nav ul{gap:1rem;}
+  .why-items{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="dot"></div>
+<div id="ring"></div>
+<nav>
+  <a class="nav-logo" href="#">Nexa<span>Builds</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Us</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-top rev">
+    <div class="hero-badge">Available for projects now</div>
+    <div style="text-align:right;color:rgba(200,241,53,.4);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Est. 2025 &nbsp;·&nbsp; Pan-India</div>
+  </div>
+  <h1 class="hero-h1 rev">WE BUILD<br><span class="ol">SMARTER</span><br><span class="ac">WEBSITES</span></h1>
+  <div class="hero-bottom">
+    <div class="hero-desc-col rev">
+      <p>NexaBuilds is a student-founded web & AI agency. We build fast, affordable websites with real AI features — chatbots, booking systems, smart search — for small businesses across India.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-lime">Start a Project</a>
+        <a href="#work" class="btn-wht">See Our Work</a>
+      </div>
+    </div>
+    <div class="hstats rev">
+      <div class="hstat"><div class="hstat-n">₹8K</div><div class="hstat-l">Starting Price</div><div class="hstat-s">No hidden fees</div></div>
+      <div class="hstat"><div class="hstat-n">7</div><div class="hstat-l">Day Delivery</div><div class="hstat-s">Starter sites</div></div>
+      <div class="hstat"><div class="hstat-n">5+</div><div class="hstat-l">Industries</div><div class="hstat-s">Food, health & more</div></div>
+      <div class="hstat"><div class="hstat-n">AI</div><div class="hstat-l">Every Project</div><div class="hstat-s">Built-in, not bolted</div></div>
+    </div>
+  </div>
+</section>
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Web Development</span><span class="sep"> ✦ </span><span>AI Chatbots</span><span class="sep"> ✦ </span><span>Booking Systems</span><span class="sep"> ✦ </span><span>E-Commerce</span><span class="sep"> ✦ </span><span>Admin Dashboards</span><span class="sep"> ✦ </span><span>Pan-India</span><span class="sep"> ✦ </span><span>Fast Delivery</span><span class="sep"> ✦ </span>
+    <span>Web Development</span><span class="sep"> ✦ </span><span>AI Chatbots</span><span class="sep"> ✦ </span><span>Booking Systems</span><span class="sep"> ✦ </span><span>E-Commerce</span><span class="sep"> ✦ </span><span>Admin Dashboards</span><span class="sep"> ✦ </span><span>Pan-India</span><span class="sep"> ✦ </span><span>Fast Delivery</span><span class="sep"> ✦ </span>
+  </div>
+</div>
+<section id="services">
+  <div class="srv-header">
+    <div class="srv-label rev">
+      <div>
+        <div class="eyebrow">01 — Services</div>
+        <h2>What We Build</h2>
+        <p>Every service built around one goal — getting your small business more customers online, faster.</p>
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:.7rem;color:var(--mid);margin-top:2rem;">06 services available →</div>
+    </div>
+    <div class="srv-list">
+      <div class="si rev"><div class="si-num">01 /</div><div><div class="si-name">Business Websites</div><div class="si-desc">Fast, mobile-first sites with SEO, WhatsApp button, Google Maps & contact forms.</div><div class="si-chips"><span class="chip">React</span><span class="chip">SEO</span><span class="chip">Mobile-First</span></div></div><div class="si-price"><small>From</small><strong>₹8,000</strong></div><div class="sa">→</div></div>
+      <div class="si rev"><div class="si-num">02 /</div><div><div class="si-name">AI Chatbots</div><div class="si-desc">Smart bots that answer FAQs 24/7, capture leads and reduce your workload.</div><div class="si-chips"><span class="chip">AI/ML</span><span class="chip">Lead Capture</span><span class="chip">24/7</span></div></div><div class="si-price"><small>From</small><strong>₹5,000</strong></div><div class="sa">→</div></div>
+      <div class="si rev"><div class="si-num">03 /</div><div><div class="si-name">Booking Systems</div><div class="si-desc">Online appointment systems for clinics, coaching centers, restaurants & salons.</div><div class="si-chips"><span class="chip">Scheduling</span><span class="chip">Calendar</span></div></div><div class="si-price"><small>From</small><strong>₹8,000</strong></div><div class="sa">→</div></div>
+      <div class="si rev"><div class="si-num">04 /</div><div><div class="si-name">E-Commerce & Catalogues</div><div class="si-desc">Product listings & online stores with Razorpay payment integration.</div><div class="si-chips"><span class="chip">Razorpay</span><span class="chip">Cart</span><span class="chip">Inventory</span></div></div><div class="si-price"><small>From</small><strong>₹12,000</strong></div><div class="sa">→</div></div>
+      <div class="si rev"><div class="si-num">05 /</div><div><div class="si-name">Admin Dashboards</div><div class="si-desc">Manage orders, bookings & content with zero technical knowledge needed.</div><div class="si-chips"><span class="chip">CMS</span><span class="chip">Analytics</span></div></div><div class="si-price"><small>From</small><strong>₹15,000</strong></div><div class="sa">→</div></div>
+      <div class="si rev"><div class="si-num">06 /</div><div><div class="si-name">Monthly Maintenance</div><div class="si-desc">Keep your site fast, updated & secure with priority support guaranteed.</div><div class="si-chips"><span class="chip">Updates</span><span class="chip">Support</span></div></div><div class="si-price"><small>Monthly</small><strong>₹3,000</strong></div><div class="sa">→</div></div>
+    </div>
+  </div>
+</section>
+<section id="work">
+  <div class="work-head rev">
+    <div><div class="eyebrow" style="color:var(--orange);">02 — Our Work</div><h2>Sample<br><em>Projects</em></h2></div>
+    <div style="text-align:right;"><div class="wc">05 projects shown</div><p style="font-size:.9rem;color:var(--mid);line-height:1.6;max-width:300px;">Real design, real features — built across five industries.</p></div>
+  </div>
+  <div class="work-items">
+    <div class="wr odd rev">
+      <div class="wvis" style="background:linear-gradient(145deg,#1a0800,#3d1500);">
+        <div style="width:85%;max-width:300px;background:rgba(255,255,255,.04);border:1px solid rgba(255,90,0,.25);border-radius:8px;padding:1.25rem;">
+          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:#ff6b35;margin-bottom:.75rem;">🌶 SpiceRoute</div>
+          <div style="display:flex;gap:.5rem;margin-bottom:.75rem;">
+            <div style="flex:1;background:rgba(255,90,0,.15);border:1px solid rgba(255,90,0,.2);border-radius:4px;padding:.5rem;font-size:.6rem;color:rgba(255,255,255,.5);text-align:center;">Menu</div>
+            <div style="flex:1;background:#ff6b35;border-radius:4px;padding:.5rem;font-size:.6rem;color:white;text-align:center;font-weight:700;">Reserve</div>
+            <div style="flex:1;background:rgba(255,90,0,.15);border:1px solid rgba(255,90,0,.2);border-radius:4px;padding:.5rem;font-size:.6rem;color:rgba(255,255,255,.5);text-align:center;">Order</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:4px;padding:.5rem;font-size:.55rem;color:rgba(255,255,255,.4);">"What are your hours?" → 🤖 Instant AI reply ✓</div>
+        </div>
+      </div>
+      <div class="winfo">
+        <span class="wtag" style="background:rgba(255,107,53,.12);color:#f4632a;border:1.5px solid rgba(244,99,42,.2);">Restaurant</span>
+        <div class="wtitle">SpiceRoute<br>Restaurant</div>
+        <div class="wdesc">Digital menu, table reservation, WhatsApp ordering & AI chatbot — all in one clean site.</div>
+        <div class="wstack"><span class="wpill">React</span><span class="wpill">Node.js</span><span class="wpill">AI Chatbot</span><span class="wpill">WhatsApp API</span></div>
+        <div class="wcta">View Project <span>→</span></div>
+      </div>
+    </div>
+    <div class="wr even rev">
+      <div class="wvis" style="background:linear-gradient(145deg,#001233,#0a2a6e);">
+        <div style="width:85%;max-width:300px;background:rgba(255,255,255,.04);border:1px solid rgba(30,80,220,.3);border-radius:8px;padding:1.25rem;">
+          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:#4d7fff;margin-bottom:.75rem;">📚 BrightMinds</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.75rem;">
+            <div style="background:rgba(30,80,220,.12);border:1px solid rgba(30,80,220,.2);border-radius:4px;padding:.5rem;font-size:.55rem;color:rgba(255,255,255,.45);text-align:center;">Maths · Science<br>English</div>
+            <div style="background:#1a3cff;border-radius:4px;padding:.5rem;font-size:.6rem;color:white;font-weight:700;text-align:center;display:flex;align-items:center;justify-content:center;">Enroll Now</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:4px;padding:.5rem;"><div style="font-size:.55rem;color:rgba(255,255,255,.3);margin-bottom:.3rem;">Fee Payment</div><div style="height:4px;background:rgba(30,80,220,.15);border-radius:2px;"><div style="width:65%;height:100%;background:#1a3cff;border-radius:2px;"></div></div></div>
+        </div>
+      </div>
+      <div class="winfo">
+        <span class="wtag" style="background:rgba(26,60,255,.1);color:#1a3cff;border:1.5px solid rgba(26,60,255,.2);">Education</span>
+        <div class="wtitle">BrightMinds<br>Coaching</div>
+        <div class="wdesc">Course listings, student enrollment, Razorpay fee portal & automated FAQ chatbot running 24/7.</div>
+        <div class="wstack"><span class="wpill">React</span><span class="wpill">Razorpay</span><span class="wpill">AI Bot</span><span class="wpill">SEO</span></div>
+        <div class="wcta">View Project <span>→</span></div>
+      </div>
+    </div>
+    <div class="wr odd rev">
+      <div class="wvis" style="background:linear-gradient(145deg,#002818,#015c35);">
+        <div style="width:85%;max-width:300px;background:rgba(255,255,255,.04);border:1px solid rgba(0,180,100,.2);border-radius:8px;padding:1.25rem;">
+          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:#00c46e;margin-bottom:.75rem;">🏥 CareFirst Clinic</div>
+          <div style="display:flex;gap:.5rem;margin-bottom:.75rem;">
+            <div style="flex:1;background:rgba(0,180,100,.08);border:1px solid rgba(0,180,100,.15);border-radius:4px;padding:.5rem;text-align:center;"><div style="font-size:.55rem;color:rgba(255,255,255,.4);">Dr. Sharma</div><div style="font-size:.5rem;color:rgba(0,196,110,.7);margin-top:.2rem;">General</div></div>
+            <div style="flex:1;background:rgba(0,180,100,.08);border:1px solid rgba(0,180,100,.15);border-radius:4px;padding:.5rem;text-align:center;"><div style="font-size:.55rem;color:rgba(255,255,255,.4);">Dr. Patel</div><div style="font-size:.5rem;color:rgba(0,196,110,.7);margin-top:.2rem;">Cardio</div></div>
+          </div>
+          <div style="background:#00c46e;border-radius:4px;padding:.55rem;font-size:.6rem;color:#001a0e;font-weight:900;text-align:center;">📅 Book Appointment</div>
+        </div>
+      </div>
+      <div class="winfo">
+        <span class="wtag" style="background:rgba(0,180,100,.1);color:#00b864;border:1.5px solid rgba(0,180,100,.2);">Healthcare</span>
+        <div class="wtitle">CareFirst<br>Clinic</div>
+        <div class="wdesc">Doctor profiles, online appointment booking, services directory & patient enquiry system.</div>
+        <div class="wstack"><span class="wpill">HTML/CSS/JS</span><span class="wpill">Booking API</span><span class="wpill">Google Maps</span></div>
+        <div class="wcta">View Project <span>→</span></div>
+      </div>
+    </div>
+    <div class="wr even rev">
+      <div class="wvis" style="background:linear-gradient(145deg,#18001f,#420060);">
+        <div style="width:85%;max-width:300px;background:rgba(255,255,255,.04);border:1px solid rgba(140,0,220,.2);border-radius:8px;padding:1.25rem;">
+          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:#c084fc;margin-bottom:.75rem;">🛒 FreshMart</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:.75rem;">
+            <div style="background:rgba(140,0,220,.1);border:1px solid rgba(140,0,220,.15);border-radius:4px;padding:.5rem;text-align:center;"><div style="font-size:.8rem;">🥛</div><div style="font-size:.5rem;color:rgba(255,255,255,.4);margin-top:.2rem;">₹45</div></div>
+            <div style="background:rgba(140,0,220,.1);border:1px solid rgba(140,0,220,.15);border-radius:4px;padding:.5rem;text-align:center;"><div style="font-size:.8rem;">🍎</div><div style="font-size:.5rem;color:rgba(255,255,255,.4);margin-top:.2rem;">₹120</div></div>
+            <div style="background:rgba(140,0,220,.1);border:1px solid rgba(140,0,220,.15);border-radius:4px;padding:.5rem;text-align:center;"><div style="font-size:.8rem;">🌾</div><div style="font-size:.5rem;color:rgba(255,255,255,.4);margin-top:.2rem;">₹60</div></div>
+          </div>
+          <div style="display:flex;gap:.5rem;"><div style="flex:2;background:rgba(255,255,255,.05);border-radius:4px;padding:.4rem;font-size:.5rem;color:rgba(255,255,255,.3);">Order via WhatsApp →</div><div style="flex:1;background:#9333ea;border-radius:4px;padding:.4rem;font-size:.5rem;font-weight:700;color:white;text-align:center;">Go</div></div>
+        </div>
+      </div>
+      <div class="winfo">
+        <span class="wtag" style="background:rgba(147,51,234,.1);color:#9333ea;border:1.5px solid rgba(147,51,234,.2);">Retail</span>
+        <div class="wtitle">FreshMart<br>Retail Store</div>
+        <div class="wdesc">Product catalogue, WhatsApp ordering, inventory display & Google Maps integration.</div>
+        <div class="wstack"><span class="wpill">React</span><span class="wpill">WhatsApp API</span><span class="wpill">Product CMS</span></div>
+        <div class="wcta">View Project <span>→</span></div>
+      </div>
+    </div>
+    <div class="wr odd rev" style="grid-template-columns:1fr;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;min-height:280px;">
+        <div class="wvis" style="background:linear-gradient(145deg,#0a0a14,#1a1a3e);">
+          <div style="width:85%;max-width:340px;background:rgba(255,255,255,.03);border:1px solid rgba(99,102,241,.2);border-radius:10px;padding:1.5rem;">
+            <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;"><div style="width:8px;height:8px;background:#6366f1;border-radius:50%;"></div><div style="font-family:'Fraunces',serif;font-size:1rem;font-weight:900;color:rgba(255,255,255,.8);">LaunchPad</div><div style="margin-left:auto;background:rgba(99,102,241,.2);padding:.2rem .5rem;border-radius:3px;font-size:.5rem;color:#818cf8;font-weight:700;">BETA</div></div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,.35);line-height:1.5;margin-bottom:1rem;">AI-powered platform for modern businesses. Scale smarter with intelligent automation.</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem;">
+              <div style="border:1px solid rgba(255,255,255,.06);border-radius:5px;padding:.6rem;text-align:center;"><div style="font-size:.55rem;color:rgba(255,255,255,.3);">Starter</div><div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.6);">Free</div></div>
+              <div style="border:1px solid #6366f1;border-radius:5px;padding:.6rem;text-align:center;background:rgba(99,102,241,.1);"><div style="font-size:.55rem;color:#818cf8;">Pro</div><div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.8);">₹999</div></div>
+              <div style="border:1px solid rgba(255,255,255,.06);border-radius:5px;padding:.6rem;text-align:center;"><div style="font-size:.55rem;color:rgba(255,255,255,.3);">Enterprise</div><div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.6);">Custom</div></div>
+            </div>
+            <div style="background:#6366f1;border-radius:5px;padding:.55rem;font-size:.6rem;color:white;font-weight:900;text-align:center;">Get Started Free →</div>
+          </div>
+        </div>
+        <div class="winfo" style="border-left:2px solid var(--black);">
+          <span class="wtag" style="background:rgba(99,102,241,.1);color:#6366f1;border:1.5px solid rgba(99,102,241,.2);">Startup</span>
+          <div class="wtitle" style="font-size:2.5rem;">LaunchPad Tech<br>Startup Site</div>
+          <div class="wdesc">Tiered pricing, AI lead chatbot, investor section & analytics — built to convert from day one.</div>
+          <div class="wstack"><span class="wpill">React</span><span class="wpill">AI Integration</span><span class="wpill">Analytics</span><span class="wpill">Lead Capture</span></div>
+          <div class="wcta">View Project <span>→</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="pricing">
+  <div class="price-head rev">
+    <div><div class="eyebrow">03 — Pricing</div><h2>Simple,<br>Honest Pricing</h2></div>
+    <p>No hidden charges. 50% upfront, 50% on delivery. Always.</p>
+  </div>
+  <div class="pcols">
+    <div class="pc rev">
+      <div class="pc-tier">Starter Pack</div>
+      <div class="pc-price">₹8K</div>
+      <div class="pc-range">up to ₹12,000</div>
+      <div class="pc-days">⚡ Delivered in 7–10 days</div>
+      <div class="pc-line"></div>
+      <ul class="pc-ul"><li>3–5 Page Responsive Website</li><li>Mobile-Friendly Design</li><li>WhatsApp + Google Maps</li><li>Basic SEO Setup</li><li>Contact Form</li><li>1 Month Free Support</li></ul>
+      <a href="#contact" class="pc-btn">Get Started</a>
+    </div>
+    <div class="pc hot rev">
+      <div class="hot-mark">Most Popular Choice</div>
+      <div class="pc-tier">Growth Pack</div>
+      <div class="pc-price">₹20K</div>
+      <div class="pc-range">up to ₹35,000</div>
+      <div class="pc-days">⚡ Delivered in 15–20 days</div>
+      <div class="pc-line"></div>
+      <ul class="pc-ul"><li>Everything in Starter</li><li>Up to 10 Pages</li><li>Booking / Enquiry System</li><li>AI Chatbot running 24/7</li><li>Google Analytics Setup</li><li>Blog / Content Section</li><li>3 Months Free Support</li></ul>
+      <a href="#contact" class="pc-btn">Get Started</a>
+    </div>
+    <div class="pc rev">
+      <div class="pc-tier">Pro Pack</div>
+      <div class="pc-price">₹50K</div>
+      <div class="pc-range">up to ₹80,000</div>
+      <div class="pc-days">⚡ Delivered in 30–45 days</div>
+      <div class="pc-line"></div>
+      <ul class="pc-ul"><li>Everything in Growth</li><li>Full Custom Web Application</li><li>AI Search & Recommendations</li><li>Razorpay Payment Gateway</li><li>Admin Dashboard CMS</li><li>6 Months Free Support</li></ul>
+      <a href="#contact" class="pc-btn">Get Started</a>
+    </div>
+  </div>
+</section>
+<section id="team">
+  <div class="team-head rev">
+    <div><div class="eyebrow" style="color:var(--lime);">04 — The Team</div><h2>The People<br><em>Behind It</em></h2></div>
+    <p>CS students. Builders. We treat every project like our own business.</p>
+  </div>
+  <div class="tcols">
+    <div class="tc rev">
+      <div class="tc-letter">A</div>
+      <div class="tc-badge">✦ Founder & CEO</div>
+      <div class="tc-name">Ashish</div>
+      <div class="tc-role">Web Dev & ML Lead</div>
+      <div class="tc-skills"><span class="tc-skill">HTML/CSS</span><span class="tc-skill">Machine Learning</span><span class="tc-skill">C/C++</span></div>
+      <div class="tc-q">"Research Intern at NIT Patna. Building NexaBuilds to make smart websites accessible for every small business in India."</div>
+    </div>
+    <div class="tc rev">
+      <div class="tc-letter">T</div>
+      <div class="tc-badge">Co-Founder</div>
+      <div class="tc-name">Teammate 2</div>
+      <div class="tc-role">Frontend Developer</div>
+      <div class="tc-skills"><span class="tc-skill">React</span><span class="tc-skill">JavaScript</span><span class="tc-skill">UI Design</span></div>
+      <div class="tc-q">"Turning wireframes into pixel-perfect interfaces that clients love from day one."</div>
+    </div>
+    <div class="tc rev">
+      <div class="tc-letter">T</div>
+      <div class="tc-badge">Co-Founder</div>
+      <div class="tc-name">Teammate 3</div>
+      <div class="tc-role">Backend & AI Engineer</div>
+      <div class="tc-skills"><span class="tc-skill">Python</span><span class="tc-skill">Node.js</span><span class="tc-skill">AI/ML</span></div>
+      <div class="tc-q">"Building the smart stuff — APIs, databases and AI that actually work in real businesses."</div>
+    </div>
+  </div>
+</section>
+<section id="why">
+  <div class="why-inner">
+    <div class="why-left rev">
+      <div>
+        <div class="eyebrow">05 — Why Us</div>
+        <h2>Why small businesses choose <em>us</em></h2>
+        <p>We're not a big agency with big overhead. We're lean, fast, and we care about every project personally.</p>
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:.68rem;color:var(--mid);margin-top:3rem;">04 reasons →</div>
+    </div>
+    <div class="why-items">
+      <div class="wi rev"><div class="wn">01</div><div class="wi-title">Student Prices,<br>Pro Quality</div><div class="wi-text">Our overheads are low as students, so you get agency-grade work at a fraction of big studio rates.</div></div>
+      <div class="wi rev"><div class="wn">02</div><div class="wi-title">AI Built Into<br>Every Project</div><div class="wi-text">Chatbots, automation, smart features — not afterthoughts. AI is core to how we build everything.</div></div>
+      <div class="wi rev"><div class="wn">03</div><div class="wi-title">Fast, Reliable<br>Delivery</div><div class="wi-text">Starter sites in 7 days. We set deadlines and we hit them. No ghosting, no excuses.</div></div>
+      <div class="wi rev"><div class="wn">04</div><div class="wi-title">Pan-India,<br>Fully Remote</div><div class="wi-text">Serving businesses from Assam to Mumbai. Weekly updates, clear communication, zero surprises.</div></div>
+    </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="rev">
+    <div class="cta-ey">Get In Touch</div>
+    <h2>Ready to go<br><em>online?</em></h2>
+    <p>Tell us about your business. We reply within 24 hours with a free, no-pressure quote.</p>
+    <div class="cta-row">
+      <a href="mailto:contact@nexabuilds.in" class="btn-w">📧 contact@nexabuilds.in</a>
+      <a href="https://wa.me/91XXXXXXXXXX" class="btn-g">💬 WhatsApp Us</a>
+    </div>
+    <div class="cta-note">Pan-India · Starting ₹8,000 · Reply in 24 hours · 50% advance only</div>
+  </div>
+</section>
+<footer>
+  <div class="f-logo">Nexa<span>Builds</span></div>
+  <div class="f-links"><a href="#services">Services</a><a href="#work">Work</a><a href="#pricing">Pricing</a><a href="#team">Team</a><a href="#contact">Contact</a></div>
+  <p>© 2025 NexaBuilds · Web & AI Agency · Pan-India</p>
+</footer>
+<script>
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-4}px,${my-4}px)`;});
+(function a(){rx+=(mx-rx)*0.09;ry+=(my-ry)*0.09;ring.style.transform=`translate(${rx-22}px,${ry-22}px)`;requestAnimationFrame(a);})();
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('on'),i*55);});},{threshold:0.07});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
